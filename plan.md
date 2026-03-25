@@ -3,38 +3,38 @@
 ## Sprint 1: Foundation (Week 1-2) — 13 points
 
 ### TUS-01: Project Scaffolding & Configuration (5 pts)
-- [ ] Initialize Vite project with `react-ts` template
-- [ ] Install dependencies: `react-router-dom@7`, `@supabase/supabase-js`
-- [ ] Install dev dependencies: `tailwindcss`, `@tailwindcss/vite`, `@types/react`, `@types/react-dom`, `eslint`, `prettier`
-- [ ] Configure `vite.config.ts` with Tailwind plugin + path aliases (`@/*` → `./src/*`)
-- [ ] Configure `tsconfig.json` with strict mode + matching path aliases
-- [ ] Set up `src/index.css` with `@import "tailwindcss"`
-- [ ] Create `.env` with placeholder Supabase variables
-- [ ] Set up ESLint + Prettier configs
-- [ ] Create full folder structure: `src/{api,types,services,hooks,context,components/ui,pages,utils,data}`
-- [ ] Configure React Router v7 in `App.tsx` with 3 routes (/, /provider/:id, /queue/:id)
-- [ ] Add placeholder page components for each route
-- [ ] Verify: `npm run dev` starts, all routes resolve, Tailwind works, TS compiles
+- [x] Initialize Vite project with `react-ts` template
+- [x] Install dependencies: `react-router-dom@7`, `@supabase/supabase-js`
+- [x] Install dev dependencies: `tailwindcss`, `@tailwindcss/vite`, `@types/react`, `@types/react-dom`, `eslint`, `prettier`
+- [x] Configure `vite.config.ts` with Tailwind plugin + path aliases (`@/*` → `./src/*`)
+- [x] Configure `tsconfig.json` with strict mode + matching path aliases
+- [x] Set up `src/index.css` with `@import "tailwindcss"`
+- [x] Create `.env` with placeholder Supabase variables
+- [x] Set up ESLint + Prettier configs
+- [x] Create full folder structure: `src/{api,types,services,hooks,context,components/ui,pages,utils,data}`
+- [x] Configure React Router v7 in `App.tsx` with 3 routes (/, /provider/:id, /queue/:id)
+- [x] Add placeholder page components for each route
+- [x] Verify: `npm run dev` starts, all routes resolve, Tailwind works, TS compiles
 
 ### TUS-02: Core Types & Seed Data (3 pts)
-- [ ] Create `src/types/provider.ts` — Provider interface (7 fields)
-- [ ] Create `src/types/queue.ts` — QueueEntry interface, AppState interface
-- [ ] Create `src/types/index.ts` — barrel export
-- [ ] Create `src/data/providers.ts` — 5+ diverse seed providers (healthcare, barber, etc.)
-- [ ] Verify: all types importable via `@/types`, seed data passes TS validation
+- [x] Create `src/types/provider.ts` — Provider interface (7 fields)
+- [x] Create `src/types/queue.ts` — QueueEntry interface, AppState interface
+- [x] Create `src/types/index.ts` — barrel export
+- [x] Create `src/data/providers.ts` — 5+ diverse seed providers (healthcare, barber, etc.)
+- [x] Verify: all types importable via `@/types`, seed data passes TS validation
 
 ### TUS-03: Global State Management — QueueContext (5 pts)
-- [ ] Create `src/context/QueueContext.tsx` with QueueProvider + useQueueContext hook
-- [ ] State: `providers: Provider[]`, `myQueue: QueueEntry | null`
-- [ ] Initialize from seed data on mount
-- [ ] Implement `joinQueue(providerId)` — calculate number, increment count, store entry
-- [ ] Implement `leaveQueue()` — decrement count (min 0), clear myQueue
-- [ ] Implement `advanceQueue()` — increment currentServing for active provider
-- [ ] Implement `getCurrentProvider(id)` — lookup by ID
-- [ ] Add 8-second setInterval for simulated queue progression
-- [ ] Clean up interval on unmount
-- [ ] useQueueContext throws if used outside QueueProvider
-- [ ] Wrap App router with QueueProvider
+- [x] Create `src/context/QueueContext.tsx` with QueueProvider + useQueueContext hook
+- [x] State: `providers: Provider[]`, `myQueue: QueueEntry | null`
+- [x] Initialize from seed data on mount
+- [x] Implement `joinQueue(providerId)` — calculate number, increment count, store entry
+- [x] Implement `leaveQueue()` — decrement count (min 0), clear myQueue
+- [x] Implement `advanceQueue()` — increment currentServing for active provider
+- [x] Implement `getCurrentProvider(id)` — lookup by ID
+- [x] Add 8-second setInterval for simulated queue progression
+- [x] Clean up interval on unmount
+- [x] useQueueContext throws if used outside QueueProvider
+- [x] Wrap App router with QueueProvider
 
 ## Sprint 2: Discovery Pages (Week 3-4) — 15 points
 

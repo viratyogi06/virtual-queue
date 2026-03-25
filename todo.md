@@ -1,33 +1,36 @@
 # Current TODO — Sprint 1: Foundation
 
-## Active Task: TUS-01 — Project Scaffolding
+## ✅ Completed: TUS-01 — Project Scaffolding (5 pts)
 
-### Setup Steps (run in order)
-1. [ ] `npm create vite@latest virtual-queue -- --template react-ts`
-2. [ ] `cd virtual-queue`
-3. [ ] `npm install react-router-dom@7 @supabase/supabase-js`
-4. [ ] `npm install -D tailwindcss @tailwindcss/vite @types/react @types/react-dom eslint prettier`
-5. [ ] Configure vite.config.ts (Tailwind plugin + path alias)
-6. [ ] Configure tsconfig.json (strict mode + path alias)
-7. [ ] Set up index.css with `@import "tailwindcss"`
-8. [ ] Create .env with placeholder variables
-9. [ ] Create folder structure: `mkdir -p src/{api,types,services,hooks,context,components/ui,pages,utils,data}`
-10. [ ] Set up React Router v7 in App.tsx with 3 routes
-11. [ ] Create placeholder pages (Home, ProviderDetail, Queue)
-12. [ ] Verify everything works
+## ✅ Completed: TUS-02 — Core Types & Seed Data (3 pts)
 
-### Verification Checklist
-- [ ] `npm run dev` starts with no errors
-- [ ] Navigate to `/` — shows Home placeholder
-- [ ] Navigate to `/provider/1` — shows ProviderDetail placeholder
-- [ ] Navigate to `/queue/1` — shows Queue placeholder
-- [ ] Tailwind utility classes render correctly
-- [ ] TypeScript strict compilation passes
-- [ ] Path alias `@/` resolves
+## ✅ Completed: TUS-03 — QueueContext (5 pts)
+- [x] Created `src/context/QueueContext.tsx` — QueueProvider + useQueueContext hook
+- [x] State: `providers: Provider[]`, `myQueue: QueueEntry | null` (using AppState)
+- [x] Initialized providers from seed data on mount
+- [x] Implemented `joinQueue(providerId)` — calculate number, increment count, store entry
+- [x] Implemented `leaveQueue()` — decrement count (min 0), clear myQueue
+- [x] Implemented `advanceQueue()` — private, increments currentServing for active provider
+- [x] Implemented `getCurrentProvider(id)` — lookup by ID
+- [x] 8-second setInterval for simulated queue progression
+- [x] Interval cleanup on unmount
+- [x] useQueueContext throws if used outside QueueProvider
+- [x] Wrapped App router with QueueProvider in App.tsx
 
-## Up Next
-- TUS-02: Core Types & Seed Data
-- TUS-03: QueueContext
+## Active Task: TUS-04 — Base UI Component Library (5 pts)
+- [ ] `src/components/ui/Button.tsx` — variants (primary/secondary/danger), sizes (sm/md/lg), full-width, disabled
+- [ ] `src/components/ui/Card.tsx` — rounded, shadow, padding, optional header/footer
+- [ ] `src/components/ui/Input.tsx` — label, placeholder, onChange, optional icon
+- [ ] `src/components/ui/Badge.tsx` — color variants (blue/green/amber/red/gray)
+- [ ] `src/components/ui/ProgressBar.tsx` — percentage fill, color prop, animated transitions
+- [ ] `src/components/ui/index.ts` — barrel export
+- [ ] All components: accept className prop, focus-visible states, 44px min tap targets, mobile-responsive
+
+## Up Next: TUS-05 — Landing Page with Provider Search (5 pts)
+- [ ] Home.tsx with header, two-tab nav (Search + Scan QR)
+- [ ] ProviderCard.tsx component
+- [ ] Real-time search filtering
+- [ ] Empty state
 
 ## Blocked
 - Nothing currently blocked
