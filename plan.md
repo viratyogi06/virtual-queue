@@ -39,13 +39,13 @@
 ## Sprint 2: Discovery Pages (Week 3-4) — 15 points
 
 ### TUS-04: Base UI Component Library (5 pts)
-- [ ] `src/components/ui/Button.tsx` — variants (primary/secondary/danger), sizes (sm/md/lg), full-width, disabled
-- [ ] `src/components/ui/Card.tsx` — rounded, shadow, padding, optional header/footer
-- [ ] `src/components/ui/Input.tsx` — label, placeholder, onChange, optional icon
-- [ ] `src/components/ui/Badge.tsx` — color variants (blue/green/amber/red/gray)
-- [ ] `src/components/ui/ProgressBar.tsx` — percentage fill, color prop, animated transitions
-- [ ] `src/components/ui/index.ts` — barrel export
-- [ ] All components: accept className prop, focus-visible states, 44px min tap targets, mobile-responsive
+- [x] `src/components/ui/Button.tsx` — variants (primary/secondary/danger), sizes (sm/md/lg), full-width, disabled
+- [x] `src/components/ui/Card.tsx` — rounded, shadow, padding, optional header/footer
+- [x] `src/components/ui/Input.tsx` — label, placeholder, onChange, optional icon
+- [x] `src/components/ui/Badge.tsx` — color variants (blue/green/amber/red/gray)
+- [x] `src/components/ui/ProgressBar.tsx` — percentage fill, color prop, animated transitions
+- [x] `src/components/ui/index.ts` — barrel export
+- [x] All components: accept className prop, focus-visible states, 44px min tap targets, mobile-responsive
 
 ### TUS-05: Landing Page with Provider Search (5 pts)
 - [ ] `src/pages/Home.tsx` — header with branding + tagline

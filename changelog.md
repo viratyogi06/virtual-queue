@@ -2,6 +2,26 @@
 
 ---
 
+## [TUS-04] Base UI Component Library — 2026-03-26
+
+### Completed
+- [x] Created `src/components/ui/Button.tsx` — variants (primary/secondary/danger), sizes (sm/md/lg), fullWidth, disabled; 44px min tap target on all sizes
+- [x] Created `src/components/ui/Card.tsx` — `bg-white rounded-2xl shadow-md`, optional header/footer with `border-b`/`border-t` dividers, padding prop (none/sm/md/lg)
+- [x] Created `src/components/ui/Input.tsx` — optional label, left-side icon slot (adds `pl-10`), `onChange` passes string value directly (not raw event), min-h-[44px]
+- [x] Created `src/components/ui/Badge.tsx` — 5 color variants (blue/green/amber/red/gray) mapped to bg+text pairs per color system
+- [x] Created `src/components/ui/ProgressBar.tsx` — percentage clamped 0–100, 4 fill colors, `transition-all duration-500 ease-out` animated fill
+- [x] Created `src/components/ui/index.ts` — barrel export for all 5 components + their prop interfaces
+- [x] All components: `className` prop, `focus-visible:ring-2` states, Tailwind utilities only, strict TypeScript (no `any`)
+
+### Verification
+- [x] `npm run build` — zero TypeScript errors, zero warnings
+- [x] Bundle: 236KB JS / 16KB CSS (gzipped: 77KB / 3.8KB)
+
+### Notes
+> `ProgressBar` uses a single `style={{ width: '${n}%' }}` for the runtime fill value — Tailwind cannot generate arbitrary percentages at build time. All other styling is Tailwind utilities.
+
+---
+
 ## [TUS-01] Project Scaffolding & Configuration — 2026-03-25
 
 ### Completed
