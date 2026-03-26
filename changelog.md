@@ -2,6 +2,37 @@
 
 ---
 
+## [TUS-09] Live Queue Tracking Page — 2026-03-26
+
+### Completed
+- [x] Created `src/services/queueCalculator.ts` — 5 named pure exports (no React, no DOM); formulas from `src-services-CLAUDE.md`: `calculatePeopleAhead(queueNumber, currentServing)` → `max(0, queueNumber - currentServing - 1)`; `calculateProgress(queueNumber, peopleAhead)` → `((queueNumber - peopleAhead) / queueNumber) * 100` clamped 0–100; `calculateEstimatedWait(peopleAhead, averageWaitTime)` → `peopleAhead * averageWaitTime`; `isNext(peopleAhead)` → `peopleAhead === 0`; `isReady(currentServing, queueNumber)` → `currentServing >= queueNumber` (pre-built for TUS-10)
+- [x] Created `src/components/QueueStatusDisplay.tsx` — `QueueStatusDisplayProps { currentServing, queueNumber, className? }`; `grid grid-cols-2 gap-4` layout; left tile `bg-gray-100 rounded-2xl` with gray "Now Serving" label + `text-4xl font-bold text-gray-700` number; right tile `bg-blue-600 rounded-2xl` with `text-blue-200` label + `text-4xl font-bold text-white` `#N` number; both tiles `min-h-[88px]`
+- [x] Created `src/components/ProgressCard.tsx` — `ProgressCardProps { progress, peopleAhead, estimatedWait, className? }`; wraps `<Card padding="md">`; `{Math.round(progress)}% there` label right-aligned; `<ProgressBar color="blue" percentage={progress} />`; bottom stat row: people ahead (gray, singular/plural) + est. wait (amber `~X min wait`, or green "Almost your turn!" when 0)
+- [x] Replaced `src/pages/Queue.tsx` placeholder — `useEffect` mount validation: checks `id !== undefined`, `myQueue !== null`, `myQueue.providerId === id`, `provider !== undefined`; invalid → `navigate('/', { replace: true })`; null-render guard on same conditions for first-render safety; all derived values computed inline per render (no local state); white header with "← Leave Queue" button (`min-h-[44px]`, focus-visible ring) → `leaveQueue()` + `navigate('/', { replace: true })`; provider info card with 64px avatar, name, specialty Badge, in-queue count + avg-time chips; `<QueueStatusDisplay>` + `<ProgressCard>`; yellow `bg-yellow-50 border-yellow-300` "You're next!" banner when `isNext(peopleAhead)`; "Keep this page open" instruction text `text-xs text-gray-400`
+
+### Derived Values Pattern
+```typescript
+const peopleAhead = calculatePeopleAhead(myQueue.queueNumber, provider.currentServing)
+const progress    = calculateProgress(myQueue.queueNumber, peopleAhead)
+const estWait     = calculateEstimatedWait(peopleAhead, provider.averageWaitTime)
+const next        = isNext(peopleAhead)
+```
+No `useState` or `useEffect` for derived values — computed inline each render from context, which re-renders every 8 seconds via `advanceQueue()`.
+
+### Verification
+- [x] Join queue → `/queue/:id` renders with correct Now Serving + Your Number tiles
+- [x] Wait 8 seconds → `currentServing` increments, `ProgressCard` updates, progress bar animates
+- [x] `peopleAhead` reaches 0 → yellow "You're next!" banner appears
+- [x] "← Leave Queue" → `leaveQueue()` clears context, redirects to `/`, provider queue count decrements
+- [x] Navigate to `/queue/bad-id` directly (no queue) → silent redirect to `/`
+- [x] Navigate to `/queue/:id` without joining → silent redirect to `/`
+- [x] `npm run build` — zero TypeScript errors; bundle 252KB JS / 22.97KB CSS (gzip: 81KB / 5.06KB)
+
+### Notes
+> `isReady` is included in `queueCalculator.ts` even though TUS-09 only uses `isNext`. It belongs in the service layer as pure queue math and will be consumed by `useNotifications` in TUS-10 without any changes to the calculator file.
+
+---
+
 ## [TUS-07 + TUS-08] Provider Detail Page & Queue Joining Logic — 2026-03-26
 
 ### Completed

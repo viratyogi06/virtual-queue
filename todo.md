@@ -1,4 +1,4 @@
-# Current TODO — Sprint 3: Provider & Queue Join
+# Current TODO — Sprint 4: Live Tracking & Notifications
 
 ## ✅ Completed: TUS-01 — Project Scaffolding (5 pts)
 
@@ -44,17 +44,19 @@
 - [x] Join Queue button (`size="lg"` full-width primary) shown only when `!isInAnyQueue`
 - [x] User in a different queue → Join hidden, no green banner, detail visible normally
 
-## Active Task: TUS-09 — Live Queue Tracking Page (8 pts)
-- [ ] `src/pages/Queue.tsx` — validate state on mount (provider exists, myQueue matches)
-- [ ] Invalid state → silent redirect to `/`
-- [ ] "Leave Queue" back-arrow in header
-- [ ] Provider info card (avatar, name, specialty, queue count, avg time)
-- [ ] `src/components/QueueStatusDisplay.tsx` — Now Serving (gray) + Your Number (blue) tiles
-- [ ] `src/components/ProgressCard.tsx` — progress %, bar, people ahead, estimated wait
-- [ ] `src/services/queueCalculator.ts` — peopleAhead, progress %, estimated wait (pure functions)
-- [ ] Yellow "You're next!" banner when peopleAhead === 0
-- [ ] Reactive updates from context state changes
-- [ ] Leave Queue → clear state + navigate to `/`
+## ✅ Completed: TUS-09 — Live Queue Tracking Page (8 pts)
+- [x] `src/services/queueCalculator.ts` — 5 pure named exports: `calculatePeopleAhead`, `calculateProgress`, `calculateEstimatedWait`, `isNext`, `isReady`
+- [x] `src/components/QueueStatusDisplay.tsx` — `grid-cols-2` tile pair: gray "Now Serving" + blue "Your Number #X", `text-4xl font-bold` numbers
+- [x] `src/components/ProgressCard.tsx` — progress % label, `ProgressBar color="blue"`, people ahead count, amber est. wait (green "Almost your turn!" when 0)
+- [x] `src/pages/Queue.tsx` — replaced placeholder; mount validation (`useEffect` → `navigate('/', { replace: true })` on invalid state); null-render guard; derived values inline from context; "← Leave Queue" header; yellow "You're next!" banner when `isNext`; "Keep this page open" instruction text
+
+## Active Task: TUS-10 — Multi-Modal Notification System (5 pts)
+- [ ] `src/utils/sound.ts` — `playBuzzer()`: 3 beeps at 800Hz, square wave, 0.15s each, 0.3 gain
+- [ ] `src/services/notificationService.ts` — orchestrate audio + haptic + visual in parallel
+- [ ] `src/hooks/useNotifications.ts` — trigger when `currentServing >= queueNumber`
+- [ ] `src/components/ReadyScreen.tsx` — green gradient, checkmark, pulse animation
+- [ ] Haptic: `navigator.vibrate([200,100,200,100,200])` with feature detection
+- [ ] `useRef` flag prevents re-triggering
 
 ## Blocked
 - Nothing currently blocked

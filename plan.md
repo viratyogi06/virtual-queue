@@ -89,16 +89,16 @@
 ## Sprint 4: Live Tracking & Notifications (Week 7-8) — 13 points
 
 ### TUS-09: Live Queue Tracking Page (8 pts)
-- [ ] `src/pages/Queue.tsx` — validate state on mount (provider exists, myQueue matches)
-- [ ] Invalid state → silent redirect to `/`
-- [ ] "Leave Queue" back-arrow in header
-- [ ] Provider info card (avatar, name, specialty, queue count, avg time)
-- [ ] `src/components/QueueStatusDisplay.tsx` — Now Serving (gray) + Your Number (blue) tiles
-- [ ] `src/components/ProgressCard.tsx` — progress %, bar, people ahead, estimated wait
-- [ ] `src/services/queueCalculator.ts` — peopleAhead, progress %, estimated wait (pure functions)
-- [ ] Yellow "You're next!" banner when peopleAhead === 0
-- [ ] Reactive updates from context state changes
-- [ ] Leave Queue → clear state + navigate to `/`
+- [x] `src/pages/Queue.tsx` — validate state on mount (provider exists, myQueue matches)
+- [x] Invalid state → silent redirect to `/`
+- [x] "Leave Queue" back-arrow in header
+- [x] Provider info card (avatar, name, specialty, queue count, avg time)
+- [x] `src/components/QueueStatusDisplay.tsx` — Now Serving (gray) + Your Number (blue) tiles
+- [x] `src/components/ProgressCard.tsx` — progress %, bar, people ahead, estimated wait
+- [x] `src/services/queueCalculator.ts` — peopleAhead, progress %, estimated wait (pure functions)
+- [x] Yellow "You're next!" banner when peopleAhead === 0
+- [x] Reactive updates from context state changes
+- [x] Leave Queue → clear state + navigate to `/`
 
 ### TUS-10: Multi-Modal Notification System (5 pts)
 - [ ] `src/utils/sound.ts` — playBuzzer(): 3 beeps at 800Hz, square wave, 0.15s, 0.3 gain
