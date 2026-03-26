@@ -112,18 +112,18 @@
 ## Sprint 5: Polish & Ship (Week 9-10) — 10 points
 
 ### TUS-11: Queue Exit Flow (3 pts)
-- [ ] Leave from Provider Detail: red button, calls leaveQueue(), re-renders to Join state
-- [ ] Leave from Queue Tracking: back-arrow, calls leaveQueue(), navigates to `/`
-- [ ] No confirmation dialog
-- [ ] `totalInQueue` decrements (min 0), `myQueue` → null
-- [ ] Home page reflects updated counts
+- [x] Leave from Provider Detail: red button, calls leaveQueue(), re-renders to Join state
+- [x] Leave from Queue Tracking: back-arrow, calls leaveQueue(), navigates to `/`
+- [x] No confirmation dialog
+- [x] `totalInQueue` decrements (min 0), `myQueue` → null
+- [x] Home page reflects updated counts
 
 ### TUS-12: Error Handling & Edge Cases (4 pts)
-- [ ] `src/services/validationService.ts` — pure validation functions
-- [ ] Provider not found → error message + Go Home button
-- [ ] Invalid queue state → silent redirect to `/`
-- [ ] Invalid QR code → alert, input retained
-- [ ] `src/components/ui/Toast.tsx` — error/success variants (future-proofing)
+- [x] `src/services/validationService.ts` — pure validation functions
+- [x] Provider not found → error message + Go Home button
+- [x] Invalid queue state → silent redirect to `/`
+- [x] Invalid QR code → alert, input retained
+- [x] `src/components/ui/Toast.tsx` — error/success variants (future-proofing)
 
 ### TUS-13: Final Polish & Deployment (3 pts)
 - [ ] Responsive audit: 375px, 768px, 1024px

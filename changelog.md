@@ -2,6 +2,62 @@
 
 ---
 
+## [TUS-12] Error Handling & Edge Cases — 2026-03-26
+
+### Completed
+- [x] Created `src/services/validationService.ts` — 3 pure, unit-testable exports: `isValidProviderId(id)` (type guard `string | undefined → id is string`, rejects `undefined` and `''`); `hasActiveQueue(myQueue)` (type guard `QueueEntry | null → myQueue is QueueEntry`); `queueMatchesProvider(myQueue, providerId)` (equality check on `myQueue.providerId`). No React, no DOM — fully platform-agnostic per architecture rules.
+- [x] Created `src/components/ui/Toast.tsx` — `ToastProps { message, variant: 'success' | 'error', onDismiss?, className? }`; `fixed bottom-4 left-4 right-4 max-w-lg mx-auto` positioning; success variant: `bg-green-50 border-green-300 text-green-800` with `✓` icon; error variant: `bg-red-50 border-red-300 text-red-800` with `✕` icon; optional dismiss button with `min-h-[44px] min-w-[44px]` tap target; `role="alert"` for accessibility. Not wired into app state — caller owns visibility.
+- [x] Added `Toast` + `ToastProps` to `src/components/ui/index.ts` barrel export
+- [x] **Verified** all 4 error states already functional (no fixes needed):
+  - `/provider/invalid-id` → "Provider not found" card + Go Home button (`ProviderDetail.tsx:43–54`)
+  - `/queue/1` without active entry → silent redirect to `/` (`Queue.tsx:23–38`)
+  - Invalid QR/manual code → `window.alert`, input retained (`Home.tsx:16–23` + QRScanner never self-clears)
+  - Go Home button → `navigate('/')` (`ProviderDetail.tsx:49`)
+
+### validationService Functions
+```typescript
+isValidProviderId(id: string | undefined): id is string
+// true if id is a non-empty string — guards getCurrentProvider calls
+
+hasActiveQueue(myQueue: QueueEntry | null): myQueue is QueueEntry
+// true if user has an active entry — narrows null away
+
+queueMatchesProvider(myQueue: QueueEntry, providerId: string): boolean
+// true if entry belongs to this provider — used in Queue.tsx validation
+```
+
+### Toast Variants
+```typescript
+// Success
+<Toast variant="success" message="You've joined the queue!" onDismiss={() => setVisible(false)} />
+// Error
+<Toast variant="error" message="Something went wrong. Try again." />
+```
+
+### Notes
+> `validationService.ts` extracts the exact conditions already inline in `Queue.tsx:25–30` as named, type-guarded functions. The component does not yet import from this service (no refactor needed for MVP) — the service exists so these rules are unit-testable in isolation.
+> `Toast.tsx` is future-proofing for Supabase integration (TUS-14+). Caller controls mount/unmount — no internal timer or auto-dismiss — keeping the component stateless and easy to test.
+
+---
+
+## [TUS-11] Queue Exit Flow — 2026-03-26 (Verification)
+
+### Verification
+All acceptance criteria confirmed against existing implementation — no code changes required.
+
+- [x] **Leave from Provider Detail** — red "Leave Queue" `<Button variant="danger">` at `ProviderDetail.tsx:131–138` calls `handleLeave()` → `leaveQueue()` (context action); `isInThisQueue` becomes `false` on next render; green banner disappears, Join Queue button re-appears. User stays on provider detail page.
+- [x] **Leave from Queue Tracking** — "← Leave Queue" header button at `Queue.tsx:47–50` calls `handleLeave()` → `leaveQueue()` + `navigate('/', { replace: true })`. User lands on home page.
+- [x] **No confirmation dialog** — neither handler calls `window.confirm` or renders a modal. (ADR-007 compliant)
+- [x] **`totalInQueue` decrements (min 0), `myQueue` → null** — `leaveQueue()` at `QueueContext.tsx:71–84` uses `Math.max(0, p.totalInQueue - 1)` and sets `myQueue: null`.
+- [x] **Home page reflects updated counts** — `Home.tsx:11` reads `providers` from `useQueueContext()`; same state object updated by `leaveQueue()`; `ProviderCard` re-renders with decremented count.
+
+### Implementation References
+- `leaveQueue()` — `src/context/QueueContext.tsx:71`
+- Provider Detail leave handler — `src/pages/ProviderDetail.tsx:21`
+- Queue Tracking leave handler — `src/pages/Queue.tsx:47`
+
+---
+
 ## [TUS-10] Multi-Modal Notification System — 2026-03-26
 
 ### Completed

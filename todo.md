@@ -59,12 +59,31 @@
 - [x] `useRef` flag (`hasTriggered`) prevents re-triggering across renders
 - [x] **Bug fix:** "You're next!" yellow banner condition changed from `{next && (` to `{next && !ready && (` so it disappears when `ReadyScreen` takes over
 
-## Active Task: TUS-11 — Queue Exit Flow (3 pts)
-- [ ] Leave from Provider Detail: red "Leave Queue" button calls `leaveQueue()`, re-renders page to Join state
-- [ ] Leave from Queue Tracking: "← Leave Queue" header button calls `leaveQueue()`, navigates to `/`
-- [ ] No confirmation dialog (ADR-007)
-- [ ] `totalInQueue` decrements (min 0), `myQueue` → null
-- [ ] Home page reflects updated queue counts after leave
+## ✅ Completed: TUS-11 — Queue Exit Flow (3 pts) — Verification only
+- [x] Leave from Provider Detail: red "Leave Queue" button (`ProviderDetail.tsx:131`) calls `leaveQueue()`, re-renders page to Join state
+- [x] Leave from Queue Tracking: "← Leave Queue" header button (`Queue.tsx:47`) calls `leaveQueue()` + `navigate('/', { replace: true })`
+- [x] No confirmation dialog (ADR-007)
+- [x] `totalInQueue` decrements (min 0) via `Math.max(0, p.totalInQueue - 1)`, `myQueue` → null (`QueueContext.tsx:71`)
+- [x] Home page reflects updated queue counts — `providers` from context re-renders `ProviderCard`s
+
+## ✅ Completed: TUS-12 — Error Handling & Edge Cases (4 pts)
+- [x] `src/services/validationService.ts` — 3 pure type-guard exports: `isValidProviderId`, `hasActiveQueue`, `queueMatchesProvider` — no React, no DOM, unit-testable
+- [x] `src/components/ui/Toast.tsx` — `success`/`error` variants; `fixed bottom-4` positioning; optional dismiss button (44px tap target); `role="alert"`; added to `ui/index.ts` barrel export
+- [x] `/provider/invalid-id` → "Provider not found" + Go Home button (`ProviderDetail.tsx:43`) — verified working
+- [x] `/queue/:id` without active entry → silent redirect to `/` (`Queue.tsx:23`) — verified working
+- [x] Invalid QR/manual code → `window.alert`, input retained (`Home.tsx:16`) — verified working
+
+## Active Task: TUS-13 — Final Polish & Deployment (3 pts)
+- [ ] Responsive audit: 375px, 768px, 1024px
+- [ ] All tap targets ≥ 44×44px
+- [ ] Color coding consistency (blue/green/yellow/gray/red)
+- [ ] Custom CSS animations (pulse for ready screen)
+- [ ] Favicon + meta tags (PWA-ready)
+- [ ] Lazy route loading with `React.lazy` + `Suspense`
+- [ ] `vercel.json` with SPA rewrites
+- [ ] Production build: no warnings, <200KB gzipped
+- [ ] Deploy to Vercel, verify deep linking
+- [ ] Lighthouse mobile score > 90
 
 ## Blocked
 - Nothing currently blocked

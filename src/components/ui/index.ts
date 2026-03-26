@@ -12,3 +12,6 @@ export type { BadgeProps } from './Badge';
 
 export { ProgressBar } from './ProgressBar';
 export type { ProgressBarProps } from './ProgressBar';
+
+export { Toast } from './Toast';
+export type { ToastProps } from './Toast';
