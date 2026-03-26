@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQueueContext } from '@/context/QueueContext';
 import { Input } from '@/components/ui';
 import { ProviderCard } from '@/components/ProviderCard';
+import { QRScanner } from '@/components/QRScanner';
 
 type Tab = 'search' | 'scan';
 
@@ -11,6 +12,15 @@ export default function Home() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<Tab>('search');
   const [searchQuery, setSearchQuery] = useState('');
+
+  function handleScan(code: string) {
+    const match = providers.find((p) => p.id === code);
+    if (match) {
+      navigate(`/provider/${match.id}`);
+    } else {
+      window.alert(`No provider found for code "${code}". Please check and try again.`);
+    }
+  }
 
   const filteredProviders = providers.filter(
     (p) =>
@@ -131,11 +141,7 @@ export default function Home() {
             )}
           </>
         ) : (
-          <div className="mt-12 flex flex-col items-center text-center">
-            <span className="text-5xl mb-3">📷</span>
-            <p className="text-lg font-semibold text-gray-700">QR Scanning</p>
-            <p className="text-sm text-gray-500 mt-1">Coming in a future update</p>
-          </div>
+          <QRScanner onScan={handleScan} />
         )}
       </main>
     </div>

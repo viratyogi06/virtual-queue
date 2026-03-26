@@ -2,6 +2,40 @@
 
 ---
 
+## [TUS-07 + TUS-08] Provider Detail Page & Queue Joining Logic — 2026-03-26
+
+### Completed
+- [x] Fully implemented `src/pages/ProviderDetail.tsx` — replaced 14-line placeholder with complete page; single file covers both TUS-07 (display) and TUS-08 (queue join logic) since they are tightly coupled in one component
+- [x] White header bar with `←` Back button: `navigate('/')`, `min-h-[44px]` tap target, `focus-visible:ring-2` ring, `rounded-lg` for keyboard nav
+- [x] Provider Hero `<Card padding="lg">`: `w-24 h-24 rounded-full bg-blue-50 flex items-center justify-center text-6xl` avatar, name `text-2xl font-bold text-gray-900`, gray `<Badge>` for specialty — `text-center` layout
+- [x] Current Status `<Card padding="md">`: `text-xs font-semibold text-gray-500 uppercase tracking-wide` section label; 2-column `grid grid-cols-2 gap-4` with `bg-gray-50 rounded-xl p-3` tiles for "Now Serving" and "People in Queue", each with a gray `<Badge>`
+- [x] "If You Join Now" `<Card padding="md">`: blue `<Badge>` showing `currentServing + totalInQueue + 1` (projected number), amber `<Badge>` showing `totalInQueue × averageWaitTime` (estimated wait in minutes), `text-xs text-gray-500` footnote for avg service time
+- [x] Error state: `<Card padding="lg">` with 🔍 emoji, "Provider not found" heading, description text, full-width `<Button variant="primary">` → `navigate('/')` — shown when `getCurrentProvider(id ?? '')` returns `undefined`
+- [x] `handleJoin`: calls `joinQueue(id!)` (existing context action) then `navigate('/queue/${id}')`
+- [x] `handleLeave`: calls `leaveQueue()` (existing context action), stays on provider detail page — user can immediately rejoin (ADR-007: no confirmation dialog)
+- [x] Green banner (`bg-green-50 border border-green-200 rounded-2xl p-4`) — conditionally rendered when `isInThisQueue && myQueue`: shows "You're in queue!" heading + Active `<Badge color="green">`, queue number, "View Queue Status" primary button → `/queue/:id`, "Leave Queue" danger button
+- [x] Join Queue button (`<Button variant="primary" size="lg" fullWidth>`) — rendered only when `!isInAnyQueue`; hidden when user is in this queue OR any other queue
+
+### State Logic
+```typescript
+const provider = getCurrentProvider(id ?? '')   // Provider | undefined
+const isInThisQueue = myQueue?.providerId === id // shows green banner
+const isInAnyQueue  = myQueue !== null           // gates Join button
+```
+
+### Verification
+- [x] `/provider/1` → City Urgent Care renders; stats show 14 serving, 6 in queue, projected #21, est. ~72 min
+- [x] Join Queue → navigates to `/queue/1`; back to `/provider/1` shows green banner with #21, Join button hidden
+- [x] Leave Queue → banner disappears, Join button re-appears; stays on provider detail
+- [x] While in queue 1, visit `/provider/2` → no green banner, no Join button
+- [x] `/provider/invalid` → error card with Go Home button
+- [x] `npm run build` — zero TypeScript errors; bundle 248KB JS / 22.34KB CSS (gzip: 80KB / 4.93KB)
+
+### Notes
+> TUS-07 and TUS-08 were implemented as a single atomic change to `ProviderDetail.tsx`. No new files were created — all queue math stays inline (`currentServing + totalInQueue + 1`, `totalInQueue × averageWaitTime`) because the formulas are one-liners that don't justify extracting to a service yet. The services layer (`queueCalculator.ts`) will be introduced in TUS-09 where the same formulas are needed in multiple components.
+
+---
+
 ## [TUS-06] QR Scanner & Manual Code Entry — 2026-03-26
 
 ### Completed

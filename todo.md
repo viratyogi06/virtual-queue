@@ -1,4 +1,4 @@
-# Current TODO — Sprint 2: Discovery Pages
+# Current TODO — Sprint 3: Provider & Queue Join
 
 ## ✅ Completed: TUS-01 — Project Scaffolding (5 pts)
 
@@ -29,18 +29,32 @@
 - [x] Invalid code → `window.alert(...)`, input field NOT cleared
 - [x] Updated `src/pages/Home.tsx` — replaced scan tab placeholder with `<QRScanner onScan={handleScan} />`
 
-## Active Task: TUS-07 — Provider Detail Page (5 pts)
-- [ ] `src/pages/ProviderDetail.tsx` — extract `:id` from URL params
-- [ ] Back button → navigate to home
-- [ ] Provider card: large avatar (96px), name, specialty badge
-- [ ] Current status: Now Serving number + People in Queue count
-- [ ] "If You Join Now" preview: projected number (blue) + estimated wait (amber)
-- [ ] Average service time display
-- [ ] Full-width "Join Queue" button (hidden if already in queue)
-- [ ] Green banner with queue number when already in THIS queue
-- [ ] "View Queue Status" button → `/queue/:id`
-- [ ] "Leave Queue" red button when in this queue
-- [ ] Provider not found → error message + "Go Home" button
+## ✅ Completed: TUS-07 — Provider Detail Page (5 pts)
+- [x] `src/pages/ProviderDetail.tsx` — full implementation replacing placeholder; extracts `:id` via `useParams<{ id: string }>()`
+- [x] Back button (`←`) → `navigate('/')`, `min-h-[44px]` tap target, focus-visible ring, left-aligned in white header bar
+- [x] Provider Hero card: `w-24 h-24 rounded-full bg-blue-50` avatar circle with `text-6xl` emoji, name `text-2xl font-bold`, gray `Badge` for specialty
+- [x] Current Status card: 2-column grid — "Now Serving" + "People in Queue" gray `Badge`s in `bg-gray-50` tiles
+- [x] "If You Join Now" preview: blue `Badge` for projected number (`currentServing + totalInQueue + 1`), amber `Badge` for estimated wait (`totalInQueue × averageWaitTime`), avg service time footnote
+- [x] Provider not found (invalid/missing `:id`) → error `Card` with 🔍 icon + "Provider not found" message + "Go Home" primary button
+
+## ✅ Completed: TUS-08 — Queue Joining Logic (5 pts)
+- [x] `handleJoin` → `joinQueue(id!)` then `navigate('/queue/${id}')` — wires to existing context action
+- [x] `handleLeave` → `leaveQueue()` — stays on page, no confirmation dialog (ADR-007)
+- [x] Green banner (`bg-green-50 border-green-200`) shown when `isInThisQueue` — displays `myQueue.queueNumber`, "View Queue Status" primary button, "Leave Queue" danger button
+- [x] Join Queue button (`size="lg"` full-width primary) shown only when `!isInAnyQueue`
+- [x] User in a different queue → Join hidden, no green banner, detail visible normally
+
+## Active Task: TUS-09 — Live Queue Tracking Page (8 pts)
+- [ ] `src/pages/Queue.tsx` — validate state on mount (provider exists, myQueue matches)
+- [ ] Invalid state → silent redirect to `/`
+- [ ] "Leave Queue" back-arrow in header
+- [ ] Provider info card (avatar, name, specialty, queue count, avg time)
+- [ ] `src/components/QueueStatusDisplay.tsx` — Now Serving (gray) + Your Number (blue) tiles
+- [ ] `src/components/ProgressCard.tsx` — progress %, bar, people ahead, estimated wait
+- [ ] `src/services/queueCalculator.ts` — peopleAhead, progress %, estimated wait (pure functions)
+- [ ] Yellow "You're next!" banner when peopleAhead === 0
+- [ ] Reactive updates from context state changes
+- [ ] Leave Queue → clear state + navigate to `/`
 
 ## Blocked
 - Nothing currently blocked

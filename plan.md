@@ -66,25 +66,25 @@
 ## Sprint 3: Provider & Queue Join (Week 5-6) — 10 points
 
 ### TUS-07: Provider Detail Page (5 pts)
-- [ ] `src/pages/ProviderDetail.tsx` — extract `:id` from URL params
-- [ ] Back button → navigate to home
-- [ ] Provider card: large avatar (96px), name, specialty badge
-- [ ] Current status: Now Serving number + People in Queue count
-- [ ] "If You Join Now" preview: projected number (blue) + estimated wait (amber)
-- [ ] Average service time display
-- [ ] Full-width "Join Queue" button (hidden if already in queue)
-- [ ] Green banner with queue number when already in THIS queue
-- [ ] "View Queue Status" button → `/queue/:id`
-- [ ] "Leave Queue" red button when in this queue
-- [ ] Provider not found → error message + "Go Home" button
+- [x] `src/pages/ProviderDetail.tsx` — extract `:id` from URL params
+- [x] Back button → navigate to home
+- [x] Provider card: large avatar (96px), name, specialty badge
+- [x] Current status: Now Serving number + People in Queue count
+- [x] "If You Join Now" preview: projected number (blue) + estimated wait (amber)
+- [x] Average service time display
+- [x] Full-width "Join Queue" button (hidden if already in queue)
+- [x] Green banner with queue number when already in THIS queue
+- [x] "View Queue Status" button → `/queue/:id`
+- [x] "Leave Queue" red button when in this queue
+- [x] Provider not found → error message + "Go Home" button
 
 ### TUS-08: Queue Joining Logic (5 pts)
-- [ ] Wire Join Queue button to `joinQueue(providerId)` in context
-- [ ] After join → programmatic navigate to `/queue/:providerId`
-- [ ] Queue number = `currentServing + totalInQueue + 1`
-- [ ] Provider `totalInQueue` incremented by 1
-- [ ] QueueEntry stored with providerId, queueNumber, timestamp
-- [ ] Join button hidden if already in a queue
+- [x] Wire Join Queue button to `joinQueue(providerId)` in context
+- [x] After join → programmatic navigate to `/queue/:providerId`
+- [x] Queue number = `currentServing + totalInQueue + 1`
+- [x] Provider `totalInQueue` incremented by 1
+- [x] QueueEntry stored with providerId, queueNumber, timestamp
+- [x] Join button hidden if already in a queue
 
 ## Sprint 4: Live Tracking & Notifications (Week 7-8) — 13 points
 
