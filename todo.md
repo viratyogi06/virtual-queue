@@ -15,13 +15,14 @@
 - [x] `src/components/ui/index.ts` — barrel export
 - [x] All components: accept className prop, focus-visible states, 44px min tap targets, mobile-responsive
 
-## Active Task: TUS-05 — Landing Page with Provider Search (5 pts)
-- [ ] Home.tsx with header, two-tab nav (Search + Scan QR)
-- [ ] ProviderCard.tsx component
-- [ ] Real-time search filtering
-- [ ] Empty state
+## ✅ Completed: TUS-05 — Landing Page with Provider Search (5 pts)
+- [x] `src/pages/Home.tsx` — blue header (branding + tagline), two-tab nav (Search default active + Scan QR) with inline SVG icons
+- [x] `src/components/ProviderCard.tsx` — emoji avatar circle, name (truncated), specialty Badge (gray), queue count + wait estimate row
+- [x] Real-time search filtering (name + specialty, case-insensitive) via local `searchQuery` state
+- [x] Empty state: 🔍 icon + "No providers found" + "Try a different search term"
+- [x] Tap ProviderCard → `navigate('/provider/:id')`
 
-## Up Next: TUS-06 — QR Scanner & Manual Code Entry (5 pts)
+## Active Task: TUS-06 — QR Scanner & Manual Code Entry (5 pts)
 - [ ] QRScanner.tsx — camera placeholder, corner brackets, instructions
 - [ ] Manual code entry: input + Go button
 - [ ] Valid code → navigate to `/provider/:id`

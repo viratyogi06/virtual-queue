@@ -2,6 +2,26 @@
 
 ---
 
+## [TUS-05] Landing Page with Provider Search — 2026-03-26
+
+### Completed
+- [x] Created `src/pages/Home.tsx` — `bg-blue-600` header with "Virtual Queue" h1 + "Book your spot in seconds" tagline; replaces placeholder
+- [x] Two-tab bar (Search default active, Scan QR) using `useState<'search' | 'scan'>` local state; active tab shows `border-b-2 border-blue-600`; each tab has inline SVG icon + `min-h-[44px]`
+- [x] Search tab: `Input` component with magnifying glass SVG icon; filters `providers` from `useQueueContext()` live on every keystroke (name + specialty, case-insensitive)
+- [x] All 5 providers rendered as `ProviderCard` list (`space-y-3`); empty state (🔍 + "No providers found" + hint text) shown when filter yields zero results
+- [x] Scan QR tab: centered placeholder (📷 + "QR Scanning" + "Coming in a future update")
+- [x] Created `src/components/ProviderCard.tsx` — `<button>` wrapper with `focus-visible:ring-2 ring-blue-500`, `w-14 h-14 bg-blue-50` avatar circle, name (truncated), gray `Badge` for specialty, queue count + wait estimate row in `text-gray-500`
+- [x] Tap ProviderCard → `navigate('/provider/:id')` via `useNavigate`
+
+### Verification
+- [x] `npm run build` — zero TypeScript errors, zero warnings
+- [x] Bundle: 241KB JS / 17.81KB CSS (gzipped: 78KB / 4.2KB)
+
+### Notes
+> Tab SVGs are inline (no icon library added) to keep zero new dependencies. Queue count and wait estimate rows use emoji (👥 ⏱) for visual affordance without adding an icon package.
+
+---
+
 ## [TUS-04] Base UI Component Library — 2026-03-26
 
 ### Completed

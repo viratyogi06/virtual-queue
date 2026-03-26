@@ -48,13 +48,13 @@
 - [x] All components: accept className prop, focus-visible states, 44px min tap targets, mobile-responsive
 
 ### TUS-05: Landing Page with Provider Search (5 pts)
-- [ ] `src/pages/Home.tsx` — header with branding + tagline
-- [ ] Two-tab navigation: Search (default active) + Scan QR (local state, no route change)
-- [ ] `src/components/ProviderCard.tsx` — avatar, name, specialty badge, queue count, wait estimate
-- [ ] Search input with real-time filtering (name + specialty, case-insensitive)
-- [ ] Show all providers when search is empty
-- [ ] Empty state: search icon + "No providers found"
-- [ ] Tap ProviderCard → navigate to `/provider/:id`
+- [x] `src/pages/Home.tsx` — header with branding + tagline
+- [x] Two-tab navigation: Search (default active) + Scan QR (local state, no route change)
+- [x] `src/components/ProviderCard.tsx` — avatar, name, specialty badge, queue count, wait estimate
+- [x] Search input with real-time filtering (name + specialty, case-insensitive)
+- [x] Show all providers when search is empty
+- [x] Empty state: search icon + "No providers found"
+- [x] Tap ProviderCard → navigate to `/provider/:id`
 
 ### TUS-06: QR Scanner & Manual Code Entry (5 pts)
 - [ ] `src/components/QRScanner.tsx` — camera placeholder (icon, corner brackets, instructions)
