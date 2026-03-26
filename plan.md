@@ -101,13 +101,13 @@
 - [x] Leave Queue → clear state + navigate to `/`
 
 ### TUS-10: Multi-Modal Notification System (5 pts)
-- [ ] `src/utils/sound.ts` — playBuzzer(): 3 beeps at 800Hz, square wave, 0.15s, 0.3 gain
-- [ ] `src/services/notificationService.ts` — orchestrate audio + haptic + visual in parallel
-- [ ] `src/hooks/useNotifications.ts` — trigger when `currentServing >= queueNumber`
-- [ ] `src/components/ReadyScreen.tsx` — green gradient, checkmark, pulse animation
-- [ ] Haptic: `navigator.vibrate([200,100,200,100,200])` with feature detection
-- [ ] useRef flag prevents re-triggering
-- [ ] "Keep this page open" instruction text on queue page
+- [x] `src/utils/sound.ts` — playBuzzer(): 3 beeps at 800Hz, square wave, 0.15s, 0.3 gain
+- [x] `src/services/notificationService.ts` — orchestrate audio + haptic + visual in parallel
+- [x] `src/hooks/useNotifications.ts` — trigger when `currentServing >= queueNumber`
+- [x] `src/components/ReadyScreen.tsx` — green gradient, checkmark, pulse animation
+- [x] Haptic: `navigator.vibrate([200,100,200,100,200])` with feature detection
+- [x] useRef flag prevents re-triggering
+- [x] "Keep this page open" instruction text on queue page
 
 ## Sprint 5: Polish & Ship (Week 9-10) — 10 points
 

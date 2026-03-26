@@ -2,6 +2,52 @@
 
 ---
 
+## [TUS-10] Multi-Modal Notification System — 2026-03-26
+
+### Completed
+- [x] Created `src/utils/sound.ts` — `playBuzzer()`: creates a new `AudioContext` per call; inner `beepAt(startTime)` helper creates one `OscillatorNode` + `GainNode` pair per beep (`type = 'square'`, `frequency = 800Hz`, `gain = 0.3`, duration `0.15s`); beeps fire at `ctx.currentTime + 0.0`, `+ 0.2`, `+ 0.4`
+- [x] Created `src/services/notificationService.ts` — `triggerNotification(onVisual: () => void)`: orchestrates all three modalities fire-and-forget: `playBuzzer()` (audio), `if ('vibrate' in navigator) navigator.vibrate([200, 100, 200, 100, 200])` (haptic), `onVisual()` (visual state callback)
+- [x] Created `src/hooks/useNotifications.ts` — `useNotifications(currentServing, queueNumber): { ready }`: `useRef(false)` flag (`hasTriggered`) set to `true` before side effects to prevent race; `useEffect` deps `[currentServing, queueNumber]` checks `isReady` from `queueCalculator.ts`; on first true: sets `hasTriggered.current = true`, calls `triggerNotification(() => setReady(true))`; returns `{ ready: boolean }`
+- [x] Created `src/components/ReadyScreen.tsx` — `fixed inset-0 z-50` full-screen overlay; `bg-gradient-to-b from-green-400 to-green-600`; `animate-pulse text-8xl` ✅ checkmark; `text-4xl font-bold text-white` "You're Ready!" heading; `text-lg text-green-100` "Please proceed to the service area." subtext
+- [x] Modified `src/pages/Queue.tsx` — added `useNotifications` hook call after derived value calculations (`const { ready } = useNotifications(provider.currentServing, myQueue.queueNumber)`); added `{ready && <ReadyScreen />}` as first child of outer `div` (overlay renders above all queue UI); added imports for `useNotifications` + `ReadyScreen`
+- [x] **Bug fix in `src/pages/Queue.tsx`** — "You're next!" yellow banner condition: `{next && (` → `{next && !ready && (` — banner now correctly disappears when `ReadyScreen` takes over (both `isNext` and `isReady` are true simultaneously at trigger point)
+
+### Notification Data Flow
+```
+QueueContext setInterval (8s) → advanceQueue() → provider.currentServing++
+  → Queue.tsx re-render → useNotifications effect
+    → isReady(currentServing, queueNumber) === true
+      → hasTriggered.current = true (guard set first)
+        → triggerNotification(onVisual)
+            ├── playBuzzer()               [audio — 3 × 800Hz square beeps]
+            ├── navigator.vibrate(...)     [haptic — feature-guarded]
+            └── setReady(true)             [visual — ReadyScreen overlay]
+```
+
+### useRef Guard
+```typescript
+const hasTriggered = useRef(false)  // useRef not useState — no extra render cycle
+useEffect(() => {
+  if (!hasTriggered.current && isReady(currentServing, queueNumber)) {
+    hasTriggered.current = true
+    triggerNotification(() => setReady(true))
+  }
+}, [currentServing, queueNumber])
+```
+
+### Verification
+- [x] Join queue and wait for `currentServing >= queueNumber` — `ReadyScreen` green overlay appears
+- [x] Yellow "You're next!" banner does NOT appear alongside `ReadyScreen`
+- [x] Audio beeps fire once (3 × 800Hz, square wave) — browser audio permission required
+- [x] Haptic fires on mobile — silent no-op on desktop (feature-guarded)
+- [x] Subsequent `advanceQueue` ticks do NOT re-trigger notification (`useRef` guard)
+- [x] Page refresh resets all state (MVP: no persistence)
+
+### Notes
+> `triggerNotification` accepts `onVisual` as a callback rather than controlling React state directly — this keeps the service layer platform-agnostic (no React imports in `notificationService.ts`), consistent with the architecture rule that bottom layers must be reusable for React Native migration.
+
+---
+
 ## [TUS-09] Live Queue Tracking Page — 2026-03-26
 
 ### Completed
@@ -31,6 +77,8 @@ No `useState` or `useEffect` for derived values — computed inline each render 
 ### Notes
 > `isReady` is included in `queueCalculator.ts` even though TUS-09 only uses `isNext`. It belongs in the service layer as pure queue math and will be consumed by `useNotifications` in TUS-10 without any changes to the calculator file.
 
+### Known Bug (found during manual testing)
+- [ ] "You're next!" yellow banner persists when `currentServing >= queueNumber` — should be hidden when `isReady` is true. Fix scheduled in TUS-10.
 ---
 
 ## [TUS-07 + TUS-08] Provider Detail Page & Queue Joining Logic — 2026-03-26

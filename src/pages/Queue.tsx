@@ -5,6 +5,8 @@ import { Badge } from '@/components/ui/Badge'
 import { Card } from '@/components/ui/Card'
 import { QueueStatusDisplay } from '@/components/QueueStatusDisplay'
 import { ProgressCard } from '@/components/ProgressCard'
+import { ReadyScreen } from '@/components/ReadyScreen'
+import { useNotifications } from '@/hooks/useNotifications'
 import {
   calculatePeopleAhead,
   calculateProgress,
@@ -40,6 +42,7 @@ export default function Queue() {
   const progress = calculateProgress(myQueue.queueNumber, peopleAhead)
   const estWait = calculateEstimatedWait(peopleAhead, provider.averageWaitTime)
   const next = isNext(peopleAhead)
+  const { ready } = useNotifications(provider.currentServing, myQueue.queueNumber)
 
   const handleLeave = () => {
     leaveQueue()
@@ -48,6 +51,7 @@ export default function Queue() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {ready && <ReadyScreen />}
       {/* Header */}
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-lg mx-auto px-4 py-3 flex items-center">
@@ -97,7 +101,7 @@ export default function Queue() {
         />
 
         {/* You're next banner */}
-        {next && (
+        {next && !ready && (
           <div className="bg-yellow-50 border border-yellow-300 rounded-2xl p-4 flex items-center gap-3">
             <span className="text-2xl">⚡</span>
             <div>

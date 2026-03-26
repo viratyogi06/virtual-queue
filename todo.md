@@ -1,4 +1,4 @@
-# Current TODO — Sprint 4: Live Tracking & Notifications
+# Current TODO — Sprint 5: Polish & Ship
 
 ## ✅ Completed: TUS-01 — Project Scaffolding (5 pts)
 
@@ -50,13 +50,21 @@
 - [x] `src/components/ProgressCard.tsx` — progress % label, `ProgressBar color="blue"`, people ahead count, amber est. wait (green "Almost your turn!" when 0)
 - [x] `src/pages/Queue.tsx` — replaced placeholder; mount validation (`useEffect` → `navigate('/', { replace: true })` on invalid state); null-render guard; derived values inline from context; "← Leave Queue" header; yellow "You're next!" banner when `isNext`; "Keep this page open" instruction text
 
-## Active Task: TUS-10 — Multi-Modal Notification System (5 pts)
-- [ ] `src/utils/sound.ts` — `playBuzzer()`: 3 beeps at 800Hz, square wave, 0.15s each, 0.3 gain
-- [ ] `src/services/notificationService.ts` — orchestrate audio + haptic + visual in parallel
-- [ ] `src/hooks/useNotifications.ts` — trigger when `currentServing >= queueNumber`
-- [ ] `src/components/ReadyScreen.tsx` — green gradient, checkmark, pulse animation
-- [ ] Haptic: `navigator.vibrate([200,100,200,100,200])` with feature detection
-- [ ] `useRef` flag prevents re-triggering
+## ✅ Completed: TUS-10 — Multi-Modal Notification System (5 pts)
+- [x] `src/utils/sound.ts` — `playBuzzer()`: 3 square-wave oscillators at 800Hz, 0.3 gain, 0.15s each, spaced at 0.0s / 0.2s / 0.4s via `AudioContext`
+- [x] `src/services/notificationService.ts` — `triggerNotification(onVisual)`: calls `playBuzzer()`, `navigator.vibrate([200,100,200,100,200])` (feature-guarded), then `onVisual()`
+- [x] `src/hooks/useNotifications.ts` — `useNotifications(currentServing, queueNumber)`: `useRef` guard (`hasTriggered`) fires once when `isReady` becomes true; returns `{ ready: boolean }`
+- [x] `src/components/ReadyScreen.tsx` — `fixed inset-0` green gradient (`from-green-400 to-green-600`), `animate-pulse` ✅ checkmark, "You're Ready!" heading, "Please proceed to the service area" text, `z-50`
+- [x] Haptic: `navigator.vibrate([200,100,200,100,200])` with `'vibrate' in navigator` feature detection
+- [x] `useRef` flag (`hasTriggered`) prevents re-triggering across renders
+- [x] **Bug fix:** "You're next!" yellow banner condition changed from `{next && (` to `{next && !ready && (` so it disappears when `ReadyScreen` takes over
+
+## Active Task: TUS-11 — Queue Exit Flow (3 pts)
+- [ ] Leave from Provider Detail: red "Leave Queue" button calls `leaveQueue()`, re-renders page to Join state
+- [ ] Leave from Queue Tracking: "← Leave Queue" header button calls `leaveQueue()`, navigates to `/`
+- [ ] No confirmation dialog (ADR-007)
+- [ ] `totalInQueue` decrements (min 0), `myQueue` → null
+- [ ] Home page reflects updated queue counts after leave
 
 ## Blocked
 - Nothing currently blocked
