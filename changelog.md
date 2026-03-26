@@ -2,6 +2,28 @@
 
 ---
 
+## [TUS-06] QR Scanner & Manual Code Entry — 2026-03-26
+
+### Completed
+- [x] Created `src/components/QRScanner.tsx` — `QRScannerProps { onScan: (code: string) => void }` as the only prop; local `useState<string>('')` for the input field
+- [x] Camera placeholder: `h-56 rounded-2xl bg-gray-200` container with `overflow-hidden`; 4 absolutely-positioned corner bracket `<div>`s (`w-6 h-6`, `border-2 border-white`, 2-border-side each, `m-3` inset); 48×48 camera SVG icon + "Point your camera at a QR code" instruction text
+- [x] Manual entry: `<Card padding="md">` with "Or enter a code manually" label; `<form onSubmit={handleSubmit}>` wrapping `flex gap-2` row — `<Input className="flex-1" />` + `<Button type="submit" size="sm">Go</Button>`; Enter key handled via form submit (not `onKeyDown`) so mobile soft-keyboard "Go" key also triggers submission
+- [x] Input never self-clears — on invalid the parent alerts and the field stays populated; on valid, navigation unmounts the component
+- [x] Updated `src/pages/Home.tsx` — added `handleScan` function: `providers.find(p => p.id === code.trim())` → `navigate('/provider/:id')` on match, `window.alert(...)` on miss; replaced 5-line emoji placeholder in scan tab with `<QRScanner onScan={handleScan} />`; no new hooks needed (`providers` + `navigate` already in scope)
+
+### Verification
+- [x] Scan tab renders camera placeholder + manual entry card
+- [x] Code `1` + Enter → navigates to `/provider/1`
+- [x] Code `1` + Go click → navigates to `/provider/1`
+- [x] Code `999` + Enter → `window.alert`, field retains `999`
+- [x] Empty field + Go → no-op (no alert, no navigation)
+- [x] All tap targets ≥ 44px (`Input min-h-[44px]`, `Button size="sm"` = `h-11`)
+
+### Notes
+> Validation lives in Home.tsx (not inside QRScanner) so the component stays a pure UI collector, decoupled from provider data. `<form onSubmit>` is used instead of `onKeyDown` because the existing `Input` component does not expose a `onKeyDown` prop — the form approach also handles mobile virtual keyboard submission natively.
+
+---
+
 ## [TUS-05] Landing Page with Provider Search — 2026-03-26
 
 ### Completed

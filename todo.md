@@ -22,11 +22,25 @@
 - [x] Empty state: 🔍 icon + "No providers found" + "Try a different search term"
 - [x] Tap ProviderCard → `navigate('/provider/:id')`
 
-## Active Task: TUS-06 — QR Scanner & Manual Code Entry (5 pts)
-- [ ] QRScanner.tsx — camera placeholder, corner brackets, instructions
-- [ ] Manual code entry: input + Go button
-- [ ] Valid code → navigate to `/provider/:id`
-- [ ] Invalid code → alert, input retained
+## ✅ Completed: TUS-06 — QR Scanner & Manual Code Entry (5 pts)
+- [x] `src/components/QRScanner.tsx` — `h-56` gray rounded placeholder, 4 CSS corner brackets (white `border-2`, 2-sides each), 48×48 camera SVG, instruction text
+- [x] Manual code entry: `<form onSubmit>` wrapping `Input` (flex-1) + `Button type="submit"` — Enter key and Go button both trigger submit
+- [x] Valid code (matching provider ID) → `navigate('/provider/:id')` via `handleScan` in Home.tsx
+- [x] Invalid code → `window.alert(...)`, input field NOT cleared
+- [x] Updated `src/pages/Home.tsx` — replaced scan tab placeholder with `<QRScanner onScan={handleScan} />`
+
+## Active Task: TUS-07 — Provider Detail Page (5 pts)
+- [ ] `src/pages/ProviderDetail.tsx` — extract `:id` from URL params
+- [ ] Back button → navigate to home
+- [ ] Provider card: large avatar (96px), name, specialty badge
+- [ ] Current status: Now Serving number + People in Queue count
+- [ ] "If You Join Now" preview: projected number (blue) + estimated wait (amber)
+- [ ] Average service time display
+- [ ] Full-width "Join Queue" button (hidden if already in queue)
+- [ ] Green banner with queue number when already in THIS queue
+- [ ] "View Queue Status" button → `/queue/:id`
+- [ ] "Leave Queue" red button when in this queue
+- [ ] Provider not found → error message + "Go Home" button
 
 ## Blocked
 - Nothing currently blocked

@@ -57,11 +57,11 @@
 - [x] Tap ProviderCard → navigate to `/provider/:id`
 
 ### TUS-06: QR Scanner & Manual Code Entry (5 pts)
-- [ ] `src/components/QRScanner.tsx` — camera placeholder (icon, corner brackets, instructions)
-- [ ] Manual code entry: input + "Go" button
-- [ ] Valid code → navigate to `/provider/:id`
-- [ ] Invalid code → browser alert, input retained for retry
-- [ ] Submit on Enter key or Go button click
+- [x] `src/components/QRScanner.tsx` — camera placeholder (icon, corner brackets, instructions)
+- [x] Manual code entry: input + "Go" button
+- [x] Valid code → navigate to `/provider/:id`
+- [x] Invalid code → browser alert, input retained for retry
+- [x] Submit on Enter key or Go button click
 
 ## Sprint 3: Provider & Queue Join (Week 5-6) — 10 points
 
