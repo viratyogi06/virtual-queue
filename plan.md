@@ -126,13 +126,13 @@
 - [x] `src/components/ui/Toast.tsx` — error/success variants (future-proofing)
 
 ### TUS-13: Final Polish & Deployment (3 pts)
-- [ ] Responsive audit: 375px, 768px, 1024px
-- [ ] All tap targets ≥ 44x44px
-- [ ] Color coding consistency (blue/green/yellow/gray/red)
-- [ ] Custom CSS animations (pulse for ready screen)
-- [ ] Favicon + meta tags (PWA-ready)
-- [ ] Lazy route loading with React.lazy + Suspense
-- [ ] `vercel.json` with SPA rewrites
-- [ ] Production build: no warnings, <200KB gzipped
+- [x] Responsive audit: 375px, 768px, 1024px
+- [x] All tap targets ≥ 44x44px
+- [x] Color coding consistency (blue/green/yellow/gray/red)
+- [x] Custom CSS animations (pulse for ready screen)
+- [x] Favicon + meta tags (PWA-ready)
+- [x] Lazy route loading with React.lazy + Suspense
+- [x] `vercel.json` with SPA rewrites
+- [x] Production build: no warnings, <200KB gzipped
 - [ ] Deploy to Vercel, verify deep linking
 - [ ] Lighthouse mobile score > 90

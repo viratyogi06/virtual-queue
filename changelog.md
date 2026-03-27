@@ -2,6 +2,49 @@
 
 ---
 
+## [TUS-13] Final Polish & Deployment — 2026-03-27
+
+### Completed
+- [x] **Responsive audit** — confirmed all 3 pages (`Home`, `ProviderDetail`, `Queue`) layout-safe at 375px / 768px / 1024px; `max-w-lg mx-auto` + `px-4` constrains content to 343px on mobile with clean centering at wider viewports; `grid-cols-2 gap-4` grids work correctly at all sizes; no layout fixes needed
+- [x] **Tap target audit** — 100% compliant; all interactive elements ≥ 44×44px: tab buttons (`min-h-[44px]`), search input (`min-h-[44px]`), back/leave buttons (`min-h-[44px] min-w-[44px]`), join/leave buttons (`h-11`/`h-12` via `size="sm"/"md"/"lg"`), Toast dismiss (`min-h-[44px] min-w-[44px]`); all have `focus-visible:ring-2 ring-offset-2`
+- [x] **Color coding consistency fix** — `src/components/ui/Badge.tsx` amber variant corrected from `bg-yellow-100 text-amber-700` → `bg-amber-100 text-amber-700`; now consistent with Tailwind 4.x amber scale used elsewhere (ProgressCard, Queue.tsx wait-time text)
+- [x] **CSS animations verified** — `ReadyScreen.tsx`: `animate-pulse` on `text-8xl` ✅ checkmark (Tailwind built-in, GPU-accelerated); `ProgressBar.tsx`: `transition-all duration-500 ease-out` on fill `<div>`; no custom `@keyframes` required — Tailwind handles all animation primitives
+- [x] Created `public/favicon.svg` — Q-monogram SVG: `32×32` viewBox, `rx=8` rounded rect filled `#2563eb` (brand blue), white bold "Q" centered via `text-anchor="middle"`
+- [x] Updated `index.html` — favicon changed from `/vite.svg` to `/favicon.svg`; added: `theme-color` (`#2563eb`), `apple-mobile-web-app-capable` (`yes`), `apple-mobile-web-app-status-bar-style` (`black-translucent`), `og:title`, `og:description`, `og:type`
+- [x] Created `vercel.json` — SPA rewrite rule `{ "source": "/(.*)", "destination": "/index.html" }` ensures `/provider/:id` and `/queue/:id` deep links resolve correctly in production (without this, Vercel serves 404 for non-root routes)
+- [x] Updated `src/App.tsx` — converted all 3 page imports to `React.lazy(() => import(...))` with `<Suspense fallback={<div className="min-h-screen bg-gray-50" />}>` wrapping `RouterProvider`; produces 3 separate route chunks at build time
+- [x] Updated `src/index.css` — added global resets after Tailwind import: `*, *::before, *::after { box-sizing: border-box }`, `html { scroll-behavior: smooth; -webkit-text-size-adjust: 100% }`
+
+### Build Output
+```
+dist/index.html                           0.93 kB │ gzip:  0.44 kB
+dist/assets/index-Bi2GB_wE.css           24.89 kB │ gzip:  5.40 kB
+dist/assets/Button-8gPI3Akv.js            0.83 kB │ gzip:  0.48 kB
+dist/assets/Badge-9D0euPHq.js             0.84 kB │ gzip:  0.45 kB
+dist/assets/ProviderDetail-Bo_8MsJE.js    4.28 kB │ gzip:  1.30 kB
+dist/assets/Queue-FrRnDUyQ.js             5.95 kB │ gzip:  2.12 kB
+dist/assets/Home-C1-zGAuA.js             6.68 kB │ gzip:  2.17 kB
+dist/assets/index-DdmHNgPy.js          237.12 kB │ gzip: 77.90 kB
+```
+**Total gzipped: ~89KB** — under 200KB budget. Zero TypeScript errors, zero warnings.
+
+### Files Changed
+| File | Action |
+|------|--------|
+| `public/favicon.svg` | Created — Q-monogram SVG favicon |
+| `vercel.json` | Created — SPA rewrite config |
+| `index.html` | Updated — favicon + meta tags |
+| `src/App.tsx` | Updated — React.lazy + Suspense for all 3 routes |
+| `src/components/ui/Badge.tsx` | Fixed — amber variant bg-yellow-100 → bg-amber-100 |
+| `src/index.css` | Updated — global box-sizing + scroll-behavior resets |
+
+### Notes
+> Responsive layout required zero changes — the `max-w-lg mx-auto` pattern established in TUS-05 through TUS-09 already provides correct containment at all 3 target breakpoints. The audit confirmed the design strategy rather than uncovering issues.
+> `vercel.json` is critical for production. Without the SPA rewrite, Vercel's static file server returns 404 for any route other than `/` because React Router handles routing client-side only — the server must serve `index.html` for all paths.
+> Two TUS-13 checklist items remain pending deployment-side (Vercel deploy + Lighthouse audit) and are tracked in todo.md.
+
+---
+
 ## [TUS-12] Error Handling & Edge Cases — 2026-03-26
 
 ### Completed
